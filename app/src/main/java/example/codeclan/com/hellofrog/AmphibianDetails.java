@@ -49,7 +49,7 @@ public class AmphibianDetails extends AppCompatActivity{
         RequestCreator image = picasso.load(url);
         image.into(mImageView);
 
-        mNameText.setText("Name: "+name);
+        mNameText.setText(name);
         mSpeciesText.setText("Species: "+species);
         mNumberOfLegsText.setText("Number of Legs: " + numberOfLegs);
         mMediaText.setText("Stars in: " + media);
