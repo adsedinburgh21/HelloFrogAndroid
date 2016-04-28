@@ -22,6 +22,7 @@ public class JSONAdapter extends BaseAdapter {
     private JSONArray mJSONArray;
     private LayoutInflater mLayoutInflater;
     private Context mContext;
+    private AmphibianList mFavourites;
 
     public JSONAdapter(LayoutInflater inflater, Context context)
     {
@@ -54,6 +55,7 @@ public class JSONAdapter extends BaseAdapter {
             holder.thumbnailImageView = (ImageView) convertView.findViewById(R.id.img_thumbnail);
             holder.nameTextView = (TextView) convertView.findViewById(R.id.text_name);
             holder.speciesTextView = (TextView) convertView.findViewById(R.id.text_species);
+            holder.favouritedImageView = (ImageView) convertView.findViewById(R.id.image_favourited);
 
             convertView.setTag(holder);
         } else {
@@ -72,6 +74,12 @@ public class JSONAdapter extends BaseAdapter {
         if(jsonObject.has("name")){
             String name = jsonObject.optString("name");
             holder.nameTextView.setText(name);
+
+            if(mFavourites.get(name) != null){
+                holder.favouritedImageView.setVisibility(View.VISIBLE);
+            } else {
+                holder.favouritedImageView.setVisibility(View.INVISIBLE);
+            }
         }
 
         if(jsonObject.has("species")){
@@ -82,8 +90,9 @@ public class JSONAdapter extends BaseAdapter {
         return  convertView;
     }
 
-    public void updateData(JSONArray jsonArray){
+    public void updateData(JSONArray jsonArray, AmphibianList favourites){
         mJSONArray = jsonArray;
+        mFavourites = favourites;
         notifyDataSetChanged();
     }
 
@@ -91,5 +100,6 @@ public class JSONAdapter extends BaseAdapter {
         public ImageView thumbnailImageView;
         public TextView nameTextView;
         public TextView speciesTextView;
+        public ImageView favouritedImageView;
     }
 }

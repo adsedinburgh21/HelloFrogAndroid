@@ -1,15 +1,31 @@
 package example.codeclan.com.hellofrog;
 
+import java.io.Serializable;
+
 /**
  * Created by sandy on 25/04/2016.
  */
-public class Amphibian {
+public class Amphibian implements Serializable {
+    private String mName;
+    private String mSpecies;
+    private int mNumLegs;
+
+    public Amphibian()
+    {
+        mNumLegs = 4;
+    }
     public Amphibian(String name)
     {
+        this();
         mName = name;
     }
 
-    private String mName;
+    public Amphibian(String name, String species)
+    {
+        this();
+        mName = name;
+        mSpecies = species;
+    }
 
     public String getName() {
         return mName;
@@ -18,4 +34,10 @@ public class Amphibian {
     public void setName(String nName) {
         mName = nName;
     }
+
+    public String getSpecies() { return mSpecies; }
+
+    public void setSpecies(String species) { mSpecies = species;}
+
+    public int getNumLegs() { return mNumLegs; }
 }

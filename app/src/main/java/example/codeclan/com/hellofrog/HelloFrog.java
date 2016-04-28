@@ -24,6 +24,8 @@ import org.json.JSONObject;
 public class HelloFrog extends AppCompatActivity {
 
     private static final String API_URL = "http://cc-amphibian-api.herokuapp.com/";
+    private static final int REQUEST_CODE_FAVOURITES = 0;
+    //above REQUEST_CODE_FAVOURITES is an ID, its not a counter (the 0 cannot change as we have set this to 'final'), its so we can reference it to get info back.
 
     EditText mNameEditText;
     EditText mSpeciesEditText;
@@ -31,12 +33,15 @@ public class HelloFrog extends AppCompatActivity {
     ListView mListView;
 
     JSONAdapter mJSONAdapter;
+    AmphibianList mFavourites;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("HelloFrog:", "onCreate called");
         super.onCreate(savedInstanceState);
+
+        mFavourites = new AmphibianList();
 
         setContentView(R.layout.activity_main);
 
@@ -63,7 +68,10 @@ public class HelloFrog extends AppCompatActivity {
                 intent.putExtra("legs", jsonObject.optString("numberOfLegs"));
                 intent.putExtra("media", jsonObject.optString("media"));
                 intent.putExtra("url", jsonObject.optString("imageUrl"));
-                startActivity(intent);
+                intent.putExtra("favourites", mFavourites.getList());
+
+                startActivityForResult(intent, REQUEST_CODE_FAVOURITES);
+                //Use startActivityForResult rather than startActivity when we need to remember the outcome of the activity. eg. when we go back a page we still want the outcome to be remembered.
             }
         });
 
@@ -91,7 +99,7 @@ public class HelloFrog extends AppCompatActivity {
                 Log.d("HelloFrog: ", jsonObject.toString());
                 JSONArray data = jsonObject.optJSONArray("Amphibians");
                 if (data != null){
-                    mJSONAdapter.updateData(data);
+                    mJSONAdapter.updateData(data, mFavourites);
                 } else {
                     Log.e("HelloFrog:", "No data found :-( ");
                 }
@@ -103,7 +111,24 @@ public class HelloFrog extends AppCompatActivity {
             //// the comma above in Log.e is because it is expecting 2 parameters. If used a + instead then it would think it only has been passed 1 parameter.
         });
     }
+
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent data){
+        if (resultCode != RESULT_OK){
+            return;
+        }
+        if (requestCode == REQUEST_CODE_FAVOURITES){
+            if ( data == null) {
+                return;
+            }
+
+            mFavourites = AmphibianDetails.getFavourites(data);
+        }
+        fetchAmphibians();
+    }
 }
+
+
 
 
 

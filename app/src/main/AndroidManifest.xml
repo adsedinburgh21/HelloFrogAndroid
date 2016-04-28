@@ -22,8 +22,9 @@
 
         <activity
             android:name="example.codeclan.com.hellofrog.AmphibianDetails"
-            android:label="@string/activity_details"
-            android:parentActivityName="example.codeclan.com.hellofrog.HelloFrog">
+            android:label="@string/activity_details">
+            <!--android:parentActivityName="example.codeclan.com.hellofrog.HelloFrog">-->
+            <!-- the line above makes a parent/child relationship between the activity_main and activity_details, which gives us a back button in the top left of the child (activity_details) page -->
         </activity>
 
     </application>
