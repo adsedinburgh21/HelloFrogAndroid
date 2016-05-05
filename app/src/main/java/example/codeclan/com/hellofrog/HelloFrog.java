@@ -27,9 +27,9 @@ public class HelloFrog extends AppCompatActivity {
     private static final int REQUEST_CODE_FAVOURITES = 0;
     //above REQUEST_CODE_FAVOURITES is an ID, its not a counter (the 0 cannot change as we have set this to 'final'), its so we can reference it to get info back.
 
-    EditText mNameEditText;
-    EditText mSpeciesEditText;
-    Button mSubmitButton;
+//    EditText mNameEditText;
+//    EditText mSpeciesEditText;
+//    Button mSubmitButton;
     ListView mListView;
 
     JSONAdapter mJSONAdapter;
